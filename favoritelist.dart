@@ -1,6 +1,7 @@
 import 'package:aioapp2/lists.dart';
 import 'package:flutter/material.dart';
 
+final Set _saved = Set();
 
 class FavoriteList extends StatefulWidget {
   @override
@@ -8,82 +9,60 @@ class FavoriteList extends StatefulWidget {
 }
 
 class _FavoriteListState extends State<FavoriteList> {
-  bool isChecked = false;
-
-  final Set _saved = Set();
+  // bool isChecked = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: 53,
-        itemBuilder: (context, index) {
-          return CheckboxListTile(
-            checkColor: Colors.indigo,
-            value: isChecked,
-            onChanged: (val) {
-              setState(() {
-                isChecked = val;
-                if(val == true){
-                  _saved.add(context);
-                } else{
-                  _saved.remove(context);
-                }
-              });
-            },
-            title: Row(
-              children: <Widget>[
-                Image.asset('lib/images/${images[index]}'),
-                SizedBox(width: 10,),
-                Text(nameOfSite[index]),
-              ],
-            ),
-          );
+      appBar: AppBar(
+          title: Text('Add to Favorites!'),
+          centerTitle: true,
+          backgroundColor: Colors.red),
+      // backgroundColor: Colors.indigo,
+      body: SafeArea(
+        child: ListView.builder(
+          itemCount: 53,
+          itemBuilder: (context, index) {
+            return CheckboxListTile(
+              activeColor: Colors.red,
+              checkColor: Colors.white,
+              // value: _saved.contains(context), // changed
+              value: _saved.contains(index),
+              onChanged: (val) {
+                setState(() {
+                  // isChecked = val;           // changed
+                  // if(val == true){           // changed
+                  //   _saved.add(context);     // changed
+                  // } else{                    // changed
+                  //   _saved.remove(context);  // changed
+                  // }                          // changed
+                  if (val == true) {
+                    _saved.add(index);
+                  } else {
+                    _saved.remove(index);
+                  }
+                });
+              },
+              title: Row(
+                children: <Widget>[
+                  Image.asset('lib/images/${images[index]}'),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(nameOfSite[index]),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.red,
+        child: Icon(Icons.check),
+        onPressed: () {
+          Navigator.pop(context, _saved);
         },
       ),
     );
   }
 }
-
-// Scaffold(
-//       body: SafeArea(
-//         child: ListView.builder(
-//           itemCount: 53,
-//           itemBuilder: (BuildContext context, int index) {
-            // return Card(
-            //   child: Container(
-            //     child: ListTile(
-            //       contentPadding:
-            //           EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            //       subtitle: Row(
-            //         children: <Widget>[
-            //           Image.asset('lib/images/${images[index]}'),
-            //           SizedBox(
-            //             width: 10,
-            //           ),
-            //           Text(
-            //             nameOfSite[index],
-            //             style: TextStyle(fontWeight: FontWeight.bold),
-            //           ),
-            //         ],
-            //       ),
-            //       trailing: InkWell(
-            //         onTap: () {
-            //           if (alreadySaved) {
-            //             _saved.remove(context);
-            //           } else {
-            //             _saved.add(context);
-            //           }
-            //         },
-            //         child: Icon(
-            //           alreadySaved ? Icons.favorite : Icons.favorite_border,
-            //           color: alreadySaved ? Colors.red : null,
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // );
-//           },
-//         ),
-//       ),
-//     );
