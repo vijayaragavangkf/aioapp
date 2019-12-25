@@ -1,95 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'lists.dart';
 import 'secondtab.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  pref.getStringList("favorites")?.forEach((fav){
+    favorites.add(int.tryParse(fav));
+  });
+  runApp(MyApp());
+}
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp>{
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter GridView',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.blue,
         accentColor: Colors.white,
       ),
-      home: HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen>
-    with SingleTickerProviderStateMixin {
-  TabController controller;
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(vsync: this, length: 2);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: Drawer(),
-      backgroundColor: Colors.blueAccent,
-      appBar: AppBar(
-        backgroundColor: Colors.blueAccent,
-        title: Text('AIO'),
-        bottom: TabBar(
-          controller: controller,
-          tabs: <Widget>[
-            Tab(icon: Icon(Icons.search)),
-            Tab(icon: Icon(Icons.favorite)),
-          ],
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          drawer: Drawer(),
+          backgroundColor: Colors.blueAccent,
+          appBar: AppBar(
+            backgroundColor: Colors.blueAccent,
+            title: Text('AIO'),
+            bottom: TabBar(
+              tabs: <Widget>[
+                Tab(icon: Icon(Icons.search)),
+                Tab(icon: Icon(Icons.favorite)),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: <Widget>[
+              gridView,
+              SecondPage(),
+            ],
+          ),
         ),
       ),
-      body: TabBarView(
-        controller: controller,
-        children: <Widget>[
-          gridView,
-          SecondPage(),
-        ],
-      ),
     );
   }
 }
-
-// Scaffold(
-//       drawer: Drawer(),
-//       backgroundColor: Theme.of(context).primaryColor,
-//       body: CustomScrollView(
-//         slivers: <Widget>[
-//           SliverAppBar(
-//             pinned: true,
-//             expandedHeight: 200,
-//             flexibleSpace: FlexibleSpaceBar(
-//               title: Text(
-//                 'AIO',
-//                 style: TextStyle(fontWeight: FontWeight.bold),
-//               ),
-//               centerTitle: true,
-//             ),
-//           ),
-//           gridView,
-//         ],
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: () {},
-//         tooltip: 'Search',
-//         child: Icon(Icons.search),
-//         backgroundColor: Colors.blue,
-//         foregroundColor: Colors.white,
-//       ),
-//     );
