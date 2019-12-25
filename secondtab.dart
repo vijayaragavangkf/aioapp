@@ -1,9 +1,9 @@
+// import 'package:aioapp2/favoritelist.dart';
 // import 'package:flutter/material.dart';
-// import 'favoritelist.dart';
 
-// final Set saved = Set(); //location of 'saved' Set changed from the 'favoritelist.dart' to here!
+// import 'lists.dart';
 
-// List favorites = List();
+// List newList = [];
 
 // class SecondPage extends StatefulWidget {
 //   @override
@@ -13,53 +13,50 @@
 // class _SecondPageState extends State<SecondPage> {
 //   @override
 //   Widget build(BuildContext context) {
-//     return //return - favorite list if any item is checked, if not then just return container and a FAB!
-//      Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: <Widget>[
-//         // ListView.builder(
-//         //   itemCount: saved.length,
-//         //   itemBuilder: (context, index){
-//         //     return ListTile(
-//         //       title: Row(
-//         //         children: <Widget>[
-//         //           Image.asset('lib/images/${saved[index]}' //this is not working but i need 
-//         //             this to make it exactly like the items select screen! and also the Text(saved[index]) not working. Same Case!
-//         //         ],
-//         //       ),
-//         //     );
-//         //   },
-//         // ),
-//         Text(
-//           'Add Your Favorite Sites Here!❤',
-//           style: TextStyle(color: Colors.white),
-//         ),
-//         Container(
-//           child: Icon(Icons.favorite, size: 150, color: Colors.blue[100]),
-//         ),
-//         SizedBox(height: 250),
-//         FloatingActionButton(
-//           onPressed: () async{
-//             Set newSet = await Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => FavoriteList(),
-//               ),
-//             );
-//             setState(() {
-//               favorites = newSet.toList();
-//             });
-//             print(newSet);
-//           },
-//           child: Icon(Icons.add),
-//           foregroundColor: Colors.blue,
-//         ),
-//       ],
+//     return Container(
+//       padding: EdgeInsets.all(30),
+//       child: Stack(
+//         alignment: Alignment.bottomRight,
+//         children: <Widget>[
+//           ListView.builder(
+//             itemCount: newList.length,
+//             itemBuilder: (context, index) {
+//               return Row(
+//                 children: <Widget>[
+//                   Image.asset('lib/images/${images[newList.elementAt(index)]}'),
+//                   Text(nameOfSite[newList.elementAt(index)]),
+//                   // Image.asset('lib/images/${images[newList.elementAt(index)]}'),
+//                   // Text('item: ${newList.elementAt(index)}')
+//                 ],
+//               );
+//             },
+//           ),
+//           FloatingActionButton(
+//             child: Icon(
+//               Icons.add,
+//               color: Colors.blue,
+//             ),
+//             onPressed: () async {
+//               List newList = await Navigator.push(
+//                 context,
+//                 MaterialPageRoute(
+//                   builder: (context) => FavoriteList(),
+//                 ),
+//               );
+//               setState(() {
+//                 print(newList);
+//               });
+//             },
+//           )
+//         ],
+//       ),
 //     );
 //   }
 // }
+
 import 'package:flutter/material.dart';
-import 'package:aioapp2/lists.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'lists.dart';
 
 Set<int> favorites = {};
 
@@ -69,6 +66,15 @@ class SecondPage extends StatefulWidget {
 }
 
 class _SecondPageState extends State<SecondPage> {
+  Future<void> _upDateFavorites(Set<int> updatedFavorites) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    List<String> favoritesAsString =
+        favorites.map((fav) => fav.toString()).toList();
+    pref.setStringList("favorites", favoritesAsString);
+    favorites = updatedFavorites;
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -81,7 +87,7 @@ class _SecondPageState extends State<SecondPage> {
             padding: const EdgeInsets.all(20.0),
             child: FloatingActionButton(
               child: Icon(
-                Icons.edit,
+                Icons.add,
                 color: Colors.blue,
               ),
               onPressed: () {
@@ -90,11 +96,11 @@ class _SecondPageState extends State<SecondPage> {
                   MaterialPageRoute(
                     builder: (context) => EditFavorites(),
                   ),
-                ).then((updatedFavorites) {
+                ).then((updatedFavorites) async {
                   if (updatedFavorites != null)
-                    setState(() {
-                      favorites = updatedFavorites;
-                    });
+                    // setState(() {
+                    _upDateFavorites(updatedFavorites);
+                  // });
                 });
               },
             ),
@@ -106,10 +112,9 @@ class _SecondPageState extends State<SecondPage> {
 
   Widget _getFavoriteList() {
     if (favorites?.isNotEmpty == true)
-        return _FavoriteList();
+      return _FavoriteList();
     else
       return _EmptyFavoriteList();
-
   }
 }
 
@@ -147,20 +152,9 @@ class _EmptyFavoriteList extends StatelessWidget {
 class _FavoriteList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: favorites.length,
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage('lib/images/${images[index]}'),
-          ),
-          title: Text(nameOfSite[favorites.elementAt(index)]),
-        );
-      },
-    );
+    return favGridView;
   }
 }
-
 
 //Its FavoriteList Page. I changed the name
 class EditFavorites extends StatefulWidget {
@@ -184,14 +178,14 @@ class _EditFavoritesState extends State<EditFavorites> {
         title: Text('Add to Favorites!'),
         centerTitle: true,
         backgroundColor: Colors.red,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.done),
-            onPressed: () {
-              Navigator.pop<Set>(context, _editableFavorites);
-            },
-          )
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.done),
+        //     onPressed: () {
+        //       Navigator.pop<Set>(context, _editableFavorites);
+        //     },
+        //   )
+        // ],
       ),
       //backgroundColor: Colors.indigo,
       body: SafeArea(
@@ -199,20 +193,25 @@ class _EditFavoritesState extends State<EditFavorites> {
           itemCount: nameOfSite.length,
           itemBuilder: (context, index) {
             return ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage('lib/images/${images[index]}'),
+              title: Row(
+                children: <Widget>[
+                  Image.asset('lib/images/${images[index]}'),
+                  SizedBox(
+                    width: 30,
+                  ),
+                  Text(nameOfSite[index]),
+                ],
               ),
-              title: Text(nameOfSite[index]),
               trailing: IconButton(
                 icon: _editableFavorites.contains(index)
                     ? Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                )
+                        Icons.favorite,
+                        color: Colors.red,
+                      )
                     : Icon(
-                  Icons.favorite_border,
-                  color: Colors.grey,
-                ),
+                        Icons.favorite_border,
+                        color: Colors.grey,
+                      ),
                 onPressed: () {
                   setState(() {
                     if (_editableFavorites.contains(index))
@@ -225,6 +224,13 @@ class _EditFavoritesState extends State<EditFavorites> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.done),
+        foregroundColor: Colors.red,
+        onPressed: () {
+          Navigator.pop<Set>(context, _editableFavorites);
+        },
       ),
     );
   }
