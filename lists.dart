@@ -2,8 +2,8 @@
 
 // import 'package:aioapp/webpage.dart';
 // import 'package:flutter/material.dart';
-
-import 'package:aioapp2/webpage.dart';
+import 'secondtab.dart';
+import 'webpage.dart';
 import 'package:flutter/material.dart';
 
 List images = [
@@ -60,6 +60,42 @@ List images = [
   'image52.png',
   'image53.png',
   'image54.png',
+  'image55.png',
+  'image56.png',
+  'image57.png',
+  'image58.png',
+  'image59.png',
+  'image60.png',
+  'image61.png',
+  'image62.png',
+  'image63.png',
+  'image64.png',
+  'image65.png',
+  'image66.png',
+  'image67.png',
+  'image68.png',
+  'image69.png',
+  'image70.png',
+  'image71.png',
+  'image72.png',
+  'image73.png',
+  'image74.png',
+  'image75.png',
+  'image76.png',
+  'image77.png',
+  'image78.png',
+  'image79.png',
+  'image80.png',
+  'image81.png',
+  'image82.png',
+  'image83.png',
+  'image84.png',
+  'image85.png',
+  'image86.png',
+  'image87.png',
+  'image88.png',
+  'image89.png',
+  'image90.png',
 ];
 
 List nameOfSite = [
@@ -115,7 +151,43 @@ List nameOfSite = [
   'Accuweather',
   'Udemy',
   'Udacity',
-  'Skillshare'
+  'Skillshare',
+  'MSN',
+  'BuzzFeed', //check kr website,
+  '9Gag',
+  'DeviantArt',
+  'Wix.com',
+  'Wordpress',
+  'We Heart It',
+  'PagalWorld',
+  'Yelp',
+  'Aol',
+  'Vimeo',
+  'Slack',
+  'Flickr',
+  'Yahoo',
+  'MS Office',
+  'Outlook',
+  'Naver',
+  'Apple',
+  'Yandex',
+  'SBI Online',
+  'HDFC Online',
+  'Prime Video',
+  'IRCTC',
+  'NDTV',
+  'Manorama Online',
+  'Naukri.com',
+  'Canva',
+  'freepik',
+  'Justdial',
+  'IndiaMart',
+  'Rediff',
+  'MoneyControl',
+  'MakeMyTrip',
+  'Adobe',
+  'Shutterstock',
+  'W3 Schools',
 ];
 
 List<String> yashjha = <String>[
@@ -171,11 +243,47 @@ List<String> yashjha = <String>[
   'https://www.accuweather.com/',
   'https://www.udemy.com/',
   'https://www.udacity.com/',
-  'https://www.skillshare.com/'
+  'https://www.skillshare.com/',
+  'https://www.msn.com/',
+  'https://www.buzzfeed.com/',
+  'https://9gag.com/',
+  'https://www.deviantart.com/',
+  'https://www.wix.com/',
+  'https://wordpress.com/',
+  'https://weheartit.com/',
+  'https://www.pagalworld.mobi/',
+  'https://www.yelp.com/',
+  'https://www.aol.com/',
+  'https://vimeo.com/',
+  'https://slack.com/',
+  'https://www.flickr.com/',
+  'https://in.yahoo.com/',
+  'https://www.office.com/',
+  'https://outlook.live.com/',
+  'https://www.naver.com/',
+  'https://www.apple.com/',
+  'https://yandex.com/',
+  'https://www.onlinesbi.com/',
+  'https://www.hdfcbank.com/',
+  'https://www.primevideo.com/',
+  'https://www.irctc.co.in/',
+  'https://www.ndtv.com/',
+  'https://www.manoramaonline.com/',
+  'https://www.naukri.com/',
+  'https://www.canva.com/',
+  'https://www.freepik.com/',
+  'https://www.justdial.com/',
+  'https://www.indiamart.com/',
+  'https://www.rediff.com/',
+  'https://www.moneycontrol.com/',
+  'https://www.makemytrip.com/',
+  'https://www.adobe.com/',
+  'https://www.shutterstock.com/',
+  'https://www.w3schools.com/',
 ];
 
 var gridView = GridView.builder(
-    itemCount: 53,
+    itemCount: 89,
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
     itemBuilder: (BuildContext context, int index) {
       return InkWell(
@@ -211,51 +319,8 @@ var gridView = GridView.builder(
       );
     });
 
-//   var gridView = SliverGrid(
-//   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-//     crossAxisCount: 3,
-//   ),
-//   delegate: SliverChildBuilderDelegate(
-//     (BuildContext context, int index) {
-//       return InkWell(
-//         child: Card(
-//           elevation: 10,
-//           child: Column(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: <Widget>[
-//               Padding(
-//                 padding: const EdgeInsets.all(10),
-//                 child: Container(
-//                   child: Image.asset('lib/images/${images[index]}'),
-//                   // child: SizedBox(child: Text('yashjha'),),
-//                   // decoration: BoxDecoration(
-//                   //   image: DecorationImage(
-//                   //     image: AssetImage('lib/images/${images[index]}'),
-//                   //     fit: BoxFit.fitWidth,
-//                   //     alignment: Alignment.topCenter,
-//                   //   ),
-//                   // ),
-//                 ),
-//               ),
-//               Text(nameOfSite[index]),
-//             ],
-//           ),
-//         ),
-//         onTap: () {
-//           Navigator.push(
-//             context,
-//             MaterialPageRoute(builder: (context) => WebPage(yashjha[index])),
-//           );
-//         },
-//       );
-//     },
-//     childCount: 53,
-//   ),
-// );
-
-
 var favGridView = GridView.builder(
-    itemCount: 53,
+    itemCount: favorites.length,
     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
     itemBuilder: (BuildContext context, int index) {
       return InkWell(
