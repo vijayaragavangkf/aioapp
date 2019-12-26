@@ -299,7 +299,7 @@ class JustGridView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      child: Image.asset('lib/images/${images[index]}'),
+                      child: Image.asset('lib/images/${images[favoindex]}'),
                       // child: SizedBox(child: Text('yashjha'),),
                       // decoration: BoxDecoration(
                       //   image: DecorationImage(
@@ -343,7 +343,7 @@ class FavGridView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(10),
                     child: Container(
-                      child: Image.asset('lib/images/${images[index]}'),
+                      child: Image.asset('lib/images/${images[favorites.elementAt(index)]}'),
                       // child: SizedBox(child: Text('yashjha'),),
                       // decoration: BoxDecoration(
                       //   image: DecorationImage(
@@ -354,7 +354,7 @@ class FavGridView extends StatelessWidget {
                       // ),
                     ),
                   ),
-                  Text(nameOfSite[index], style: TextStyle(fontFamily: 'GoogleSans')),
+                  Text(nameOfSite[favorites.elementAt(index)], style: TextStyle(fontFamily: 'GoogleSans')),
                 ],
               ),
             ),
