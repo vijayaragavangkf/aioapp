@@ -282,76 +282,90 @@ List<String> yashjha = <String>[
   'https://www.w3schools.com/',
 ];
 
-var gridView = GridView.builder(
-    itemCount: 89,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-    itemBuilder: (BuildContext context, int index) {
-      return InkWell(
-        child: Card(
-          elevation: 10,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  child: Image.asset('lib/images/${images[index]}'),
-                  // child: SizedBox(child: Text('yashjha'),),
-                  // decoration: BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: AssetImage('lib/images/${images[index]}'),
-                  //     fit: BoxFit.fitWidth,
-                  //     alignment: Alignment.topCenter,
-                  //   ),
-                  // ),
-                ),
+class JustGridView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        itemCount: 89,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            child: Card(
+              elevation: 10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      child: Image.asset('lib/images/${images[index]}'),
+                      // child: SizedBox(child: Text('yashjha'),),
+                      // decoration: BoxDecoration(
+                      //   image: DecorationImage(
+                      //     image: AssetImage('lib/images/${images[index]}'),
+                      //     fit: BoxFit.fitWidth,
+                      //     alignment: Alignment.topCenter,
+                      //   ),
+                      // ),
+                    ),
+                  ),
+                  Text(nameOfSite[index], style: TextStyle(fontFamily: 'GoogleSans')),
+                ],
               ),
-              Text(nameOfSite[index]),
-            ],
-          ),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => WebPage(yashjha[index])),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WebPage(yashjha[index])),
+              );
+            },
           );
-        },
-      );
-    });
+        });
+  }
+}
 
-var favGridView = GridView.builder(
-    itemCount: favorites.length,
-    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-    itemBuilder: (BuildContext context, int index) {
-      return InkWell(
-        child: Card(
-          elevation: 10,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(10),
-                child: Container(
-                  child: Image.asset('lib/images/${images[index]}'),
-                  // child: SizedBox(child: Text('yashjha'),),
-                  // decoration: BoxDecoration(
-                  //   image: DecorationImage(
-                  //     image: AssetImage('lib/images/${images[index]}'),
-                  //     fit: BoxFit.fitWidth,
-                  //     alignment: Alignment.topCenter,
-                  //   ),
-                  // ),
-                ),
+class FavGridView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+        itemCount: favorites.length,
+        gridDelegate:
+            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+        itemBuilder: (BuildContext context, int index) {
+          return InkWell(
+            child: Card(
+              elevation: 10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      child: Image.asset('lib/images/${images[index]}'),
+                      // child: SizedBox(child: Text('yashjha'),),
+                      // decoration: BoxDecoration(
+                      //   image: DecorationImage(
+                      //     image: AssetImage('lib/images/${images[index]}'),
+                      //     fit: BoxFit.fitWidth,
+                      //     alignment: Alignment.topCenter,
+                      //   ),
+                      // ),
+                    ),
+                  ),
+                  Text(nameOfSite[index], style: TextStyle(fontFamily: 'GoogleSans')),
+                ],
               ),
-              Text(nameOfSite[index]),
-            ],
-          ),
-        ),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => WebPage(yashjha[index])),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WebPage(yashjha[index])),
+              );
+            },
           );
-        },
-      );
-    });
+        });
+  }
+}
