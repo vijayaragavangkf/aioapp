@@ -1,59 +1,3 @@
-// import 'package:aioapp2/favoritelist.dart';
-// import 'package:flutter/material.dart';
-
-// import 'lists.dart';
-
-// List newList = [];
-
-// class SecondPage extends StatefulWidget {
-//   @override
-//   _SecondPageState createState() => _SecondPageState();
-// }
-
-// class _SecondPageState extends State<SecondPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       padding: EdgeInsets.all(30),
-//       child: Stack(
-//         alignment: Alignment.bottomRight,
-//         children: <Widget>[
-//           ListView.builder(
-//             itemCount: newList.length,
-//             itemBuilder: (context, index) {
-//               return Row(
-//                 children: <Widget>[
-//                   Image.asset('lib/images/${images[newList.elementAt(index)]}'),
-//                   Text(nameOfSite[newList.elementAt(index)]),
-//                   // Image.asset('lib/images/${images[newList.elementAt(index)]}'),
-//                   // Text('item: ${newList.elementAt(index)}')
-//                 ],
-//               );
-//             },
-//           ),
-//           FloatingActionButton(
-//             child: Icon(
-//               Icons.add,
-//               color: Colors.blue,
-//             ),
-//             onPressed: () async {
-//               List newList = await Navigator.push(
-//                 context,
-//                 MaterialPageRoute(
-//                   builder: (context) => FavoriteList(),
-//                 ),
-//               );
-//               setState(() {
-//                 print(newList);
-//               });
-//             },
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'lists.dart';
@@ -67,10 +11,14 @@ class SecondPage extends StatefulWidget {
 
 class _SecondPageState extends State<SecondPage> {
   Future<void> _upDateFavorites(Set<int> updatedFavorites) async {
+    print("secong: u$updatedFavorites");
     SharedPreferences pref = await SharedPreferences.getInstance();
-    List<String> favoritesAsString =
-        favorites.map((fav) => fav.toString()).toList();
-    pref.setStringList("favorites", favoritesAsString);
+    List<String> favoritesAsString = updatedFavorites
+        .map((fav) => fav.toString())
+        .toList(); //Change `favorites`  to `updatedFavorites`
+    print(favoritesAsString);
+    await pref.setStringList(
+        "favorites", favoritesAsString); // await here to store it completely
     favorites = updatedFavorites;
     setState(() {});
   }
@@ -98,9 +46,9 @@ class _SecondPageState extends State<SecondPage> {
                   ),
                 ).then((updatedFavorites) async {
                   if (updatedFavorites != null)
-                    // setState(() {
+                    setState(() {
                     _upDateFavorites(updatedFavorites);
-                  // });
+                  });
                 });
               },
             ),
@@ -132,7 +80,10 @@ class _EmptyFavoriteList extends StatelessWidget {
                 children: <Widget>[
                   Text(
                     'Add Your Favorite Sites Here!❤',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'GoogleSans',
+                        fontStyle: FontStyle.italic),
                   ),
                   Icon(
                     Icons.favorite,
@@ -152,7 +103,7 @@ class _EmptyFavoriteList extends StatelessWidget {
 class _FavoriteList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return favGridView;
+    return FavGridView();
   }
 }
 
@@ -175,7 +126,8 @@ class _EditFavoritesState extends State<EditFavorites> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add to Favorites!'),
+        title: Text('Add to Favorites!',
+            style: TextStyle(fontFamily: 'GoogleSans')),
         centerTitle: true,
         backgroundColor: Colors.red,
         // actions: <Widget>[
@@ -199,7 +151,10 @@ class _EditFavoritesState extends State<EditFavorites> {
                   SizedBox(
                     width: 30,
                   ),
-                  Text(nameOfSite[index]),
+                  Text(
+                    nameOfSite[index],
+                    style: TextStyle(fontFamily: 'GoogleSans'),
+                  ),
                 ],
               ),
               trailing: IconButton(
